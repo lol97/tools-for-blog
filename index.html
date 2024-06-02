@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- highlight -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools For Blog</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <h3>To Source Code</h3>
+                    tipe code : <input type="text" id="syn-for">
+                    <textarea name="text-code" id="text-code" rows="20" cols="70"></textarea>
+                    <button id="convert-data">convert</button>
+                </td>
+                <td>
+                    <h3>HTML Blogger</h3>
+                    <textarea name="res-text-code" id="res-text-code" rows="20" cols="70"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="script/jquery-3.7.1.min.js"></script>
+    <script>
+        
+
+        function convert() {
+            var ele1 = document.getElementById("text-code");
+            var replaced;
+            
+            replaced = ele1.value;
+            replaced = replaced.replace(/&/ig, "&amp;");
+            replaced = replaced.replace(/</ig, "&lt;");
+            replaced = replaced.replace(/>/ig, "&gt;");
+            replaced = replaced.replace(/"/ig, "&quot;");
+            replaced = replaced.replace(/'/ig, "&#039;");
+            replaced = replaced.replace(/&#177;/ig, "&plusmn;");
+            replaced = replaced.replace(/&#169;/ig, "&copy;");
+            replaced = replaced.replace(/&#174;/ig, "&reg;");
+            replaced = replaced.replace(/ya'll/ig, "ya'll");
+
+            var prefix = '<pre><code class="'+ $("#syn-for").val() +'"> ';
+            var postfix = ' </code></pre>';
+            
+            var ele2 = document.getElementById("res-text-code");
+            ele2.value = prefix + replaced + postfix;
+        }
+
+        function doConvert() {
+            var textData = $("#text-code").val();
+            var replaced;
+            replaced = textData;
+            replaced = textData.replace(/&/ig, "&amp;");
+            replaced = textData.replace(/</ig, "&lt;");
+            replaced = textData.replace(/>/ig, "&gt;");
+            replaced = textData.replace(/"/ig, "&quot;");
+            replaced = textData.replace(/'/ig, "&#039;");
+            replaced = textData.replace(/&#177;/ig, "&plusmn;");
+            replaced = textData.replace(/&#169;/ig, "&copy;");
+            replaced = textData.replace(/&#174;/ig, "&reg;");
+            replaced = textData.replace(/ya'll/ig, "ya'll");
+            
+            $("#res-text-code").val(replaced);
+        }
+
+        $(function() {
+            $("#convert-data").on('click', function(){
+                convert();
+                //doConvert(); //dont know why not wrong 
+            });
+        });
+    </script>
+</body>
+</html>
