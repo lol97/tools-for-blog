@@ -5,34 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tools For Blog</title>
+
+    <!-- start bootstrap-5 -->
+    <link rel="stylesheet" href="assets/bootstrap-5.3.3-dist/css/bootstrap.min.css">
+    <script src="assets/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js"></script>
+    <!-- end bootstrap-5 -->
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: whitesmoke;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <table>
-            <tr>
-                <td>
-                    <h3>To Source Code</h3>
-                    tipe code : <input type="text" id="syn-for">
-                    <textarea name="text-code" id="text-code" rows="20" cols="70"></textarea>
-                    <button id="convert-data">convert</button>
-                </td>
-                <td>
-                    <h3>HTML Blogger</h3>
-                    <textarea name="res-text-code" id="res-text-code" rows="20" cols="70"></textarea>
-                </td>
-            </tr>
-        </table>
+    <div class="text-center display-4 mb-3">
+        Tools For Blogger
     </div>
 
+    <div class="container mt-5">
+        <div class="mb-3">
+            <h5>Parse Source Code to HTML Blogger</h5>
+            <p class="small">Escape all HTML tags</p>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <h4>Source Code</h4>
+                <textarea class="form-control" id="source-code" rows="20"></textarea>
+            </div>
+            <div class="col-md-2 d-flex flex-column justify-content-center align-items-center">
+                <label for="syn-for" class="form-label">Type code:</label>
+                <input type="text" class="form-control mb-3" id="syn-for">
+                <button class="btn btn-primary" id="convert-data" >Convert</button>
+            </div>
+            <div class="col-md-5">
+                <h4>HTML Blogger</h4>
+                <textarea class="form-control" id="html-blogger" rows="20"></textarea>
+            </div>
+        </div>
+    </div>
+   
     <script src="script/jquery-3.7.1.min.js"></script>
     <script>
         
 
         function convert() {
-            var ele1 = document.getElementById("text-code");
+            var ele1 = document.getElementById("source-code");
             var replaced;
             
-            replaced = ele1.value;
+            replaced = formatIndentation(ele1.value);
             replaced = replaced.replace(/&/ig, "&amp;");
             replaced = replaced.replace(/</ig, "&lt;");
             replaced = replaced.replace(/>/ig, "&gt;");
@@ -43,13 +64,19 @@
             replaced = replaced.replace(/&#174;/ig, "&reg;");
             replaced = replaced.replace(/ya'll/ig, "ya'll");
 
-            var prefix = '<pre><code class="'+ $("#syn-for").val() +'"> ';
-            var postfix = ' </code></pre>';
+            var prefix = '<pre>\n<code class="'+ $("#syn-for").val() +'"> \n';
+            var postfix = ' \n</code>\n</pre>';
             
-            var ele2 = document.getElementById("res-text-code");
+            var ele2 = document.getElementById("html-blogger");
             ele2.value = prefix + replaced + postfix;
         }
 
+        function formatIndentation(code) {
+            const tabSize = 4; // Number of spaces per tab
+            const spaces = ' '.repeat(tabSize);
+            return code.split('\n').map(line => line.replace(/\t/g, spaces)).join('\n');
+        }
+        
         function doConvert() {
             var textData = $("#text-code").val();
             var replaced;
