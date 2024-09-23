@@ -1,0 +1,1 @@
+$('#nav_cust').load('/navbar.html');
